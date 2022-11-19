@@ -14,9 +14,12 @@ jobs:
         Invoke-WebRequest https://raw.githubusercontent.com/winmg1/test2/main/ngrok.zip -OutFile ngrok.zip
         Invoke-WebRequest https://raw.githubusercontent.com/winmg1/test2/main/start.bat -OutFile start.bat
         Invoke-WebRequest https://raw.githubusercontent.com/winmg1/test2/main/winrar.exe -OutFile winrar.exe
+        Invoke-WebRequest https://raw.githubusercontent.com/winmg1/test2/main/RaiDrive.zip -OutFile RaiDrive.zip
 
     - name: Extract ngrok Files
-      run: Expand-Archive ngrok.zip
+      run: |
+        Expand-Archive ngrok.zip
+        Expand-Archive RaiDrive.zip
 
     - name: Connecting ngrok Account
       run: .\ngrok\ngrok.exe authtoken 22KZgjApveZgMuakhioJmKNmgP4_YzCkFcdrWumhCpHC45pZ
@@ -27,6 +30,7 @@ jobs:
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
         copy winrar.exe C:\Users\Public\Desktop\winrar.exe
+        copy RaiDrive_2020.6.36.exe C:\Users\Public\Desktop\RaiDrive_2020.6.36.exe
         
     - name: Create Tunnel
       run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
@@ -35,8 +39,10 @@ jobs:
       run: cmd /c start.bat
 
     - name: Install Winrar
-      run: cmd /c C:\Users\Public\Desktop\winrar.exe winrar.exe /s
-      
+      run: |
+        cmd /c C:\Users\Public\Desktop\winrar.exe winrar.exe /s
+        cmd /c C:\Users\Public\Desktop\RaiDrive_2020.6.36.exe RaiDrive_2020.6.36.exe /s
+
     - name: TimeCount
       run: |
         Invoke-WebRequest https://raw.githubusercontent.com/adtitas/ngrok-rdp/main/resources/loop.ps1 -OutFile loop.ps1
