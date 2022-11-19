@@ -22,7 +22,8 @@ jobs:
     - name: Extract RaiDrive Files
       run: |
         Expand-Archive RaiDrive.zip
-        pwd RaiDrive.zip
+        pwd
+        ls
 
     - name: Connecting ngrok Account
       run: .\ngrok\ngrok.exe authtoken 22KZgjApveZgMuakhioJmKNmgP4_YzCkFcdrWumhCpHC45pZ
