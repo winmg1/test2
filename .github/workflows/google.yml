@@ -19,7 +19,10 @@ jobs:
     - name: Extract ngrok Files
       run: |
         Expand-Archive ngrok.zip
+    - name: Extract RaiDrive Files
+      run: |
         Expand-Archive RaiDrive.zip
+        pwd RaiDrive.zip
 
     - name: Connecting ngrok Account
       run: .\ngrok\ngrok.exe authtoken 22KZgjApveZgMuakhioJmKNmgP4_YzCkFcdrWumhCpHC45pZ
@@ -30,7 +33,7 @@ jobs:
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
         copy winrar.exe C:\Users\Public\Desktop\winrar.exe
-        copy RaiDrive_2020.6.36.exe C:\Users\Public\Desktop\RaiDrive_2020.6.36.exe
+        copy RaiDrive.zip C:\Users\Public\Desktop\RaiDrive.zip
         
     - name: Create Tunnel
       run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
@@ -41,7 +44,6 @@ jobs:
     - name: Install Winrar
       run: |
         cmd /c C:\Users\Public\Desktop\winrar.exe winrar.exe /s
-        cmd /c C:\Users\Public\Desktop\RaiDrive_2020.6.36.exe RaiDrive_2020.6.36.exe /s
 
     - name: TimeCount
       run: |
